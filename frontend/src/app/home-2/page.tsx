@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic";
-import FooterTwo from '@/components/FooterTwo';
 import { mediaUrl } from '@/lib/media';
 
 export default function HomeTwo() {

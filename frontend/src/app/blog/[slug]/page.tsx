@@ -261,7 +261,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                         <img src={p.img} alt={p.title} className="w-full h-full object-cover" />
                       </div>
                       <div>
-                        <Link href="/blog">
+                    <Link href={`/blog/${p.title.toLowerCase().replace(/ /g, '-')}`}>
                           <p className="text-sm font-semibold spline-sans text-primary-900 hover:text-primary-500 common-trans leading-5 mb-1">{p.title}</p>
                         </Link>
                         <p className="text-xs text-primary-100">{p.date}</p>
