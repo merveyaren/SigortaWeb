@@ -272,7 +272,6 @@ export default function HomeTwo() {
            </div>
         </section>
       </main>
-      <FooterTwo />
     </>
   );
 }
