@@ -9,10 +9,11 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 class TestGeneralPages:
     def setup_method(self):
-        # Her testten önce tarayıcıyı başlat
+        # Her testten önce tarayıcıyı başlatır
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
-        self.base_url = "http://localhost:3000"
+        # Yerel localhost adresi yerine canlı site adresini tanımlıyoruz
+        self.base_url = "https://insucomsigorta.site"
 
     def teardown_method(self):
         # Her testten sonra tarayıcıyı kapat
