@@ -4,6 +4,8 @@ import HeaderWrapper from "@/components/HeaderWrapper";
 import FooterWrapper from "@/components/FooterWrapper";
 import Scripts from "@/components/Scripts";
 import { mediaUrl } from "@/lib/media";
+import '@/lib/monitoring';
+
 
 export const metadata: Metadata = {
   title: "Insucom - Insurance Agency",
