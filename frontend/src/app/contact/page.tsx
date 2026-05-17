@@ -11,7 +11,30 @@ export default function ContactPage() {
     e.preventDefault();
     setStatus('sending');
     try {
+      // 1. Veritabanına Kaydet (Django API)
       const res = await apiService.sendContactMessage(form);
+      
+      // 2. Web3Forms ile Arkadaşınızın Mailine Gönder
+      const web3Key = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || '';
+      if (web3Key) {
+        try {
+          await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_key: web3Key,
+              subject: `Insucom Sigorta - Yeni Mesaj: ${form.name}`,
+              from_name: 'Insucom Web',
+              name: form.name,
+              email: form.email,
+              message: form.message,
+            }),
+          });
+        } catch (emailErr) {
+          console.error('E-posta gönderimi başarısız oldu, ancak veritabanına kaydedildi:', emailErr);
+        }
+      }
+
       if (res.status === 200 || res.status === 201) {
         setStatus('sent');
         setForm({ name: '', email: '', message: '' });
