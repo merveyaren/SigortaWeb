@@ -1,6 +1,6 @@
 'use client';
-import { useEffect, Suspense } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 
 // Azure Application Insights SDK Yapılandırması
@@ -19,65 +19,69 @@ export const appInsights = new ApplicationInsights({
 if (typeof window !== 'undefined') {
     try {
         appInsights.loadAppInsights();
+        console.log("🚀 [Azure Telemetry] SDK başarıyla yüklendi.");
     } catch (e) {
         console.error('Azure Application Insights yüklenirken hata oluştu:', e);
     }
 }
 
-function MonitoringHandler() {
+export default function AzureMonitoring() {
     const pathname = usePathname();
-    const searchParams = useSearchParams();
 
-    // 🌟 1. KULLANICI DAVRANIŞI: Dinamik Sayfa Geçişi ve Ziyaretlerin Takibi
+    // 🌟 1. KULLANICI DAVRANIŞI: Dinamik Sayfa Geçişlerinin Takibi
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
-            
-            // Sayfa gösterimini ve oturumu (Session) izler
-            appInsights.trackPageView({
-                name: pathname,
-                uri: window.location.href,
-                properties: {
-                    url,
-                    referrer: document.referrer,
-                    userAgent: navigator.userAgent
-                }
-            });
-            console.log(`[Telemetry - User Behavior] Page Tracked: ${pathname}`);
+            try {
+                // Sayfa gösterimini ve oturumu (Session) izler
+                appInsights.trackPageView({
+                    name: pathname || '/',
+                    uri: window.location.href,
+                    properties: {
+                        referrer: document.referrer,
+                        userAgent: navigator.userAgent
+                    }
+                });
+                console.log(`🚀 [Azure Telemetry] Sayfa Ziyareti Kaydedildi: ${pathname}`);
+            } catch (err) {
+                console.error("Azure Telemetry Sayfa Takip Hatası:", err);
+            }
         }
-    }, [pathname, searchParams]);
+    }, [pathname]);
 
     // 🌟 2. SAYFA YÜKLENME SÜRELERİ (Performance Navigation Timing API)
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const trackPerformance = () => {
-                // Modern tarayıcı performans API verilerini al
-                const [entry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-                if (entry) {
-                    const pageLoadTime = entry.loadEventEnd - entry.startTime;
-                    const domReadyTime = entry.domContentLoadedEventEnd - entry.startTime;
-                    const dnsLookupTime = entry.domainLookupEnd - entry.domainLookupStart;
+                try {
+                    // Modern tarayıcı performans API verilerini al
+                    const [entry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+                    if (entry) {
+                        const pageLoadTime = entry.loadEventEnd - entry.startTime;
+                        const domReadyTime = entry.domContentLoadedEventEnd - entry.startTime;
+                        const dnsLookupTime = entry.domainLookupEnd - entry.domainLookupStart;
 
-                    // Grafana metrik panellerinde çizdirilmek üzere özel performans olayı fırlat
-                    appInsights.trackEvent({
-                        name: 'PageLoadPerformance',
-                        properties: {
-                            pathname,
-                            url: window.location.href,
-                        },
-                        measurements: {
-                            pageLoadTimeMs: pageLoadTime,
-                            domReadyTimeMs: domReadyTime,
-                            dnsLookupTimeMs: dnsLookupTime
-                        }
-                    });
-                    console.log(`[Telemetry - Performance] Load Time: ${pageLoadTime.toFixed(2)}ms | DOM Ready: ${domReadyTime.toFixed(2)}ms`);
+                        // Grafana için özel performans olayı fırlat
+                        appInsights.trackEvent({
+                            name: 'PageLoadPerformance',
+                            properties: {
+                                pathname: pathname || '/',
+                                url: window.location.href,
+                            },
+                            measurements: {
+                                pageLoadTimeMs: pageLoadTime,
+                                domReadyTimeMs: domReadyTime,
+                                dnsLookupTimeMs: dnsLookupTime
+                            }
+                        });
+                        console.log(`🚀 [Azure Telemetry] Performans Kaydedildi: ${pageLoadTime.toFixed(2)}ms`);
+                    }
+                } catch (err) {
+                    console.error("Azure Telemetry Performans Takip Hatası:", err);
                 }
             };
 
             // Sayfa yüklemesi zaten bittiyse anında çalıştır, bitmediyse 'load' olayını bekle
             if (document.readyState === 'complete') {
-                // Load event bittikten hemen sonra tetiklemesi için hafif bir delay verelim
                 setTimeout(trackPerformance, 100);
             } else {
                 window.addEventListener('load', trackPerformance);
@@ -87,13 +91,4 @@ function MonitoringHandler() {
     }, [pathname]);
 
     return null;
-}
-
-// Next.js App Router uyumluluğu için Suspense ile sarmalıyoruz
-export default function AzureMonitoring() {
-    return (
-        <Suspense fallback={null}>
-            <MonitoringHandler />
-        </Suspense>
-    );
 }
