@@ -14,12 +14,25 @@ export default function PaymentsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const [payingId, setPayingId] = useState<number | null>(null);
+
   useEffect(() => {
     apiService.getMyPayments()
       .then((res) => setPayments(res.data as Payment[]))
       .catch(() => setError('Ödemeler yüklenirken bir hata oluştu.'))
       .finally(() => setLoading(false));
   }, []);
+
+  const handlePay = (id: number) => {
+    setPayingId(id);
+    apiService.updatePayment(id, { status: 'paid' })
+      .then(() => {
+        apiService.getMyPayments()
+          .then((res) => setPayments(res.data as Payment[]));
+      })
+      .catch(() => alert('Ödeme işlemi sırasında bir hata oluştu.'))
+      .finally(() => setPayingId(null));
+  };
 
   const total = payments
     .filter((p) => p.status === 'paid')
@@ -57,6 +70,7 @@ export default function PaymentsPage() {
                 <th>Tutar</th>
                 <th>Son Ödeme Tarihi</th>
                 <th>Durum</th>
+                <th>İşlem</th>
               </tr>
             </thead>
             <tbody>
@@ -70,6 +84,33 @@ export default function PaymentsPage() {
                     <span className={`badge ${statusClass[p.status] ?? 'badge-gray'}`}>
                       {p.status === 'paid' ? 'Ödendi' : p.status === 'pending' ? 'Bekliyor' : 'Gecikmiş'}
                     </span>
+                  </td>
+                  <td>
+                    {p.status === 'pending' ? (
+                      <button
+                        onClick={() => handlePay(p.id)}
+                        disabled={payingId !== null}
+                        className="btn-pay"
+                        style={{
+                          backgroundColor: '#028835',
+                          color: '#fff',
+                          fontSize: '12px',
+                          padding: '6px 14px',
+                          borderRadius: '6px',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          border: 'none',
+                          boxShadow: '0 2px 4px rgba(2, 136, 53, 0.2)',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#016f2b')}
+                        onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#028835')}
+                      >
+                        {payingId === p.id ? 'Ödeniyor...' : 'Şimdi Öde'}
+                      </button>
+                    ) : (
+                      <span className="text-xs text-[#028835] font-semibold">✓ Tamamlandı</span>
+                    )}
                   </td>
                 </tr>
               ))}
