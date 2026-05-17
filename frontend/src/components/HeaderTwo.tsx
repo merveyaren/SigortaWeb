@@ -68,7 +68,7 @@ export default function HeaderTwo() {
       </div>
 
       {/* Navigation */}
-      <div className={`navigation-wrapper navigation-wrapper-two-two w-full !bg-[#004C3F] h-[90px] ${isSticky ? 'fixed top-0 left-0 shadow-lg animate-[slideDown_0.3s_ease-in-out]' : ''}`}>
+      <div className={`navigation-wrapper navigation-wrapper-two-two w-full !bg-[#004C3F] h-[90px] ${isSticky ? 'sticky fixed top-0 left-0 z-[9999] shadow-lg animate-[slideDown_0.3s_ease-in-out]' : ''}`}>
         <div className="theme-container h-full mx-auto px-5">
           <div className="w-full h-full flex justify-between items-center">
             <Link href="/">
@@ -110,7 +110,7 @@ export default function HeaderTwo() {
                   <>
                     <li>
                       <Link href="/account/policies" className="ml-4 px-4 py-2 bg-[#028835] hover:bg-white hover:text-primary-900 text-white font-bold rounded-lg text-sm common-trans shadow-sm">
-                        Portal
+                        Hesabım
                       </Link>
                     </li>
                     <li>

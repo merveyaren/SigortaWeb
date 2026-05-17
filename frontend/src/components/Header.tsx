@@ -100,7 +100,7 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
       </div>
 
       {/* Navigation */}
-      <div className={`navigation-wrapper w-full h-[90px] ${navBg} ${isSticky ? 'fixed top-0 left-0 shadow-lg animate-[slideDown_0.3s_ease-in-out]' : ''}`}>
+      <div className={`navigation-wrapper w-full h-[90px] ${navBg} ${isSticky ? 'sticky fixed top-0 left-0 z-[9999] shadow-lg animate-[slideDown_0.3s_ease-in-out]' : ''}`}>
         <div className="theme-container h-full mx-auto">
           <div className="w-full h-full flex justify-between items-center">
             <div className="h-full flex items-center space-x-[72px]">
@@ -154,7 +154,7 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
                     <>
                       <li className="h-full flex items-center ml-4">
                         <Link href="/account/policies" className="px-5 py-2 bg-[#004C3F] hover:bg-[#028835] text-white rounded-lg text-sm font-bold common-trans flex items-center shadow-sm shadow-black/10">
-                          Portal
+                          Hesabım
                         </Link>
                       </li>
                       <li className="h-full flex items-center ml-2">
@@ -185,7 +185,7 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
                       <li><Link href="/"><span>Home</span></Link></li>
                       {isLoggedIn ? (
                         <>
-                          <li><Link href="/account/policies"><span className="font-bold text-[#028835]">Portal</span></Link></li>
+                          <li><Link href="/account/policies"><span className="font-bold text-[#028835]">Hesabım</span></Link></li>
                           <li>
                             <button onClick={handleLogout} className="text-left w-full py-1">
                               <span className="font-bold text-red-600">Log out</span>
