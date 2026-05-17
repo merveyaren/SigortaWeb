@@ -1,17 +1,21 @@
-from django.urls import path
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
 
 from .views import (
-    AlertListView,
-    ClaimListView,
-    PaymentListView,
-    PolicyListView,
-    QuoteListView,
+    AlertViewSet,
+    ClaimViewSet,
+    PaymentViewSet,
+    PolicyViewSet,
+    QuoteViewSet,
 )
 
+router = DefaultRouter()
+router.register(r"policies", PolicyViewSet, basename="policy")
+router.register(r"quotes", QuoteViewSet, basename="quote")
+router.register(r"claims", ClaimViewSet, basename="claim")
+router.register(r"payments", PaymentViewSet, basename="payment")
+router.register(r"alerts", AlertViewSet, basename="alert")
+
 urlpatterns = [
-    path("policies/", PolicyListView.as_view(), name="me-policies"),
-    path("quotes/", QuoteListView.as_view(), name="me-quotes"),
-    path("claims/", ClaimListView.as_view(), name="me-claims"),
-    path("payments/", PaymentListView.as_view(), name="me-payments"),
-    path("alerts/", AlertListView.as_view(), name="me-alerts"),
+    path("", include(router.urls)),
 ]

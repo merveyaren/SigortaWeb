@@ -43,7 +43,7 @@ export default function Scripts() {
           if (typeof AOS !== 'undefined') AOS.init({ duration: 800, once: true });
         }}
       />
-      <Script src="/js/swiper.min.js" strategy="afterInteractive" />
+      <Script src="/js/swiper.min.js" strategy="beforeInteractive" />
       <Script src="/js/plugins.js" strategy="afterInteractive" />
       <Script
         src="/js/main.js"

@@ -4,7 +4,7 @@ import HeaderWrapper from "@/components/HeaderWrapper";
 import FooterWrapper from "@/components/FooterWrapper";
 import Scripts from "@/components/Scripts";
 import { mediaUrl } from "@/lib/media";
-import '@/lib/monitoring';
+import AzureMonitoring from "@/components/monitoring";
 
 
 export const metadata: Metadata = {
@@ -27,6 +27,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/css/style.css" />
       </head>
       <body>
+        <AzureMonitoring />
         <div className="mouse-cursor cursor-outer"></div>
         <div className="mouse-cursor cursor-inner"></div>
         <HeaderWrapper />
