@@ -1,19 +1,22 @@
-from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
+import os
+import django
+
+# Django ayarlarını yükle
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+django.setup()
+
+from django.contrib.auth import get_user_model
+from portal.models import InsurancePolicy, InsuranceQuote, ClaimTicket, PaymentNotice, CustomerAlert
 from datetime import date, timedelta
 
-from .models import ClaimTicket, CustomerAlert, InsurancePolicy, InsuranceQuote, PaymentNotice
-from .serializers import (
-    ClaimTicketSerializer,
-    CustomerAlertSerializer,
-    InsurancePolicySerializer,
-    InsuranceQuoteSerializer,
-    PaymentNoticeSerializer,
-)
+User = get_user_model()
+users = User.objects.all()
 
+print(f"Toplam kullanıcı sayısı: {users.count()}")
 
-def auto_seed_user_data(user):
-    """Kullanıcının hesabı boşsa, gerçekçi demo verileri anında ve otomatik olarak eklenir."""
+for user in users:
+    print(f"\nKullanıcı için veri ekleniyor: {user.username}")
+    
     # 1. Poliçeler (InsurancePolicy)
     if not InsurancePolicy.objects.filter(user=user).exists():
         InsurancePolicy.objects.create(
@@ -36,6 +39,7 @@ def auto_seed_user_data(user):
             end_date=date.today() + timedelta(days=245),
             status="active"
         )
+        print("  -> 2 adet Poliçe oluşturuldu.")
         
     # 2. Teklifler (InsuranceQuote)
     if not InsuranceQuote.objects.filter(user=user).exists():
@@ -57,6 +61,7 @@ def auto_seed_user_data(user):
             valid_until=date.today() + timedelta(days=15),
             notes="Zorunlu deprem sigortası teklifi."
         )
+        print("  -> 2 adet Teklif oluşturuldu.")
         
     # 3. Hasar Kayıtları (ClaimTicket)
     if not ClaimTicket.objects.filter(user=user).exists():
@@ -67,6 +72,7 @@ def auto_seed_user_data(user):
             description="Park halindeki araca sol arka kapıdan sürtme hasarı.",
             status="review"
         )
+        print("  -> 1 adet Hasar Kaydı oluşturuldu.")
         
     # 4. Ödemeler (PaymentNotice)
     if not PaymentNotice.objects.filter(user=user).exists():
@@ -84,6 +90,7 @@ def auto_seed_user_data(user):
             description="Kasko Poliçesi 3. Taksit Ödemesi",
             status="pending"
         )
+        print("  -> 2 adet Ödeme Planı oluşturuldu.")
         
     # 5. Bildirimler (CustomerAlert)
     if not CustomerAlert.objects.filter(user=user).exists():
@@ -99,48 +106,6 @@ def auto_seed_user_data(user):
             body=f"Kasko poliçenizin 3. taksit ödemesi yaklaşmaktadır. Son ödeme tarihi: {(date.today() + timedelta(days=20)).strftime('%d.%m.%Y')}",
             is_read=False
         )
+        print("  -> 2 adet Bildirim oluşturuldu.")
 
-
-class PolicyListView(ListAPIView):
-    serializer_class = InsurancePolicySerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        auto_seed_user_data(self.request.user)
-        return InsurancePolicy.objects.filter(user=self.request.user)
-
-
-class QuoteListView(ListAPIView):
-    serializer_class = InsuranceQuoteSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        auto_seed_user_data(self.request.user)
-        return InsuranceQuote.objects.filter(user=self.request.user)
-
-
-class ClaimListView(ListAPIView):
-    serializer_class = ClaimTicketSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        auto_seed_user_data(self.request.user)
-        return ClaimTicket.objects.filter(user=self.request.user)
-
-
-class PaymentListView(ListAPIView):
-    serializer_class = PaymentNoticeSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        auto_seed_user_data(self.request.user)
-        return PaymentNotice.objects.filter(user=self.request.user)
-
-
-class AlertListView(ListAPIView):
-    serializer_class = CustomerAlertSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        auto_seed_user_data(self.request.user)
-        return CustomerAlert.objects.filter(user=self.request.user)
+print("\nVeri tohumlama başarıyla tamamlandı!")

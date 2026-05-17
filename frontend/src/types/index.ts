@@ -149,39 +149,49 @@ export interface ContactMessagePayload {
 export interface Policy {
   id: number;
   policy_number: string;
-  type: string;
-  status: string;
+  product_name: string;
+  insurer_name: string;
+  premium_amount: number;
+  currency: string;
   start_date: string;
   end_date: string;
-  premium: string;
+  status: string;
+  created_at: string;
 }
 
 export interface Quote {
   id: number;
-  service_title: string;
-  requested_at: string;
+  reference_code: string;
+  product_type: string;
+  offered_premium: number;
   status: string;
+  valid_until: string;
+  notes: string;
+  created_at: string;
 }
 
 export interface Claim {
   id: number;
-  policy_number: string;
+  claim_number: string;
+  incident_date: string;
   description: string;
   status: string;
-  submitted_at: string;
+  created_at: string;
 }
 
 export interface Payment {
   id: number;
-  amount: string;
-  payment_date: string;
+  due_date: string;
+  amount: number;
+  description: string;
   status: string;
-  policy_number: string;
+  created_at: string;
 }
 
 export interface Alert {
   id: number;
-  message: string;
+  title: string;
+  body: string;
   is_read: boolean;
   created_at: string;
 }

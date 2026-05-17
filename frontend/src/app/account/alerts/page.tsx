@@ -53,10 +53,13 @@ export default function AlertsPage() {
                 🔔
               </div>
               <div className="flex-1">
-                <p className={`text-sm leading-6 ${!a.is_read ? 'text-[#004C3F] font-semibold' : 'text-[#677471]'}`}>
-                  {a.message}
+                <p className={`text-base leading-6 ${!a.is_read ? 'text-[#004C3F] font-bold' : 'text-[#004C3F] font-semibold'}`}>
+                  {a.title}
                 </p>
-                <p className="text-xs text-[#677471] mt-1">{new Date(a.created_at).toLocaleString('tr-TR')}</p>
+                <p className="text-sm text-[#677471] mt-1 leading-relaxed">
+                  {a.body}
+                </p>
+                <p className="text-xs text-[#9CA3AF] mt-2">{new Date(a.created_at).toLocaleString('tr-TR')}</p>
               </div>
               {!a.is_read && <span className="badge badge-green text-xs">Yeni</span>}
             </div>

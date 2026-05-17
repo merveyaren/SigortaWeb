@@ -4,8 +4,9 @@ import { apiService } from '@/lib/api';
 import { Quote } from '@/types';
 
 const statusClass: Record<string, string> = {
-  pending: 'badge-yellow',
-  approved: 'badge-green',
+  draft: 'badge-gray',
+  sent: 'badge-yellow',
+  accepted: 'badge-green',
   rejected: 'badge-red',
 };
 
@@ -45,19 +46,25 @@ export default function QuotesPage() {
           <table className="dash-table">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Hizmet</th>
+                <th>Referans No</th>
+                <th>Hizmet Türü</th>
                 <th>Talep Tarihi</th>
+                <th>Teklif Tutarı</th>
                 <th>Durum</th>
               </tr>
             </thead>
             <tbody>
               {quotes.map((q) => (
                 <tr key={q.id}>
-                  <td className="text-[#004C3F] font-semibold">#{q.id}</td>
-                  <td>{q.service_title}</td>
-                  <td>{new Date(q.requested_at).toLocaleDateString('tr-TR')}</td>
-                  <td><span className={`badge ${statusClass[q.status] ?? 'badge-gray'}`}>{q.status}</span></td>
+                  <td className="text-[#004C3F] font-semibold">{q.reference_code}</td>
+                  <td>{q.product_type}</td>
+                  <td>{new Date(q.created_at).toLocaleDateString('tr-TR')}</td>
+                  <td className="font-semibold">{parseFloat(q.offered_premium.toString()).toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ₺</td>
+                  <td>
+                    <span className={`badge ${statusClass[q.status] ?? 'badge-gray'}`}>
+                      {q.status === 'draft' ? 'Taslak' : q.status === 'sent' ? 'Gönderildi' : q.status === 'accepted' ? 'Kabul Edildi' : 'Reddedildi'}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>
