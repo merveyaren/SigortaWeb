@@ -4,7 +4,7 @@ import HeaderWrapper from "@/components/HeaderWrapper";
 import FooterWrapper from "@/components/FooterWrapper";
 import Scripts from "@/components/Scripts";
 import { mediaUrl } from "@/lib/media";
-import AzureMonitoring from "@/lib/monitoring";
+import AzureMonitoring from "@/components/monitoring";
 
 
 export const metadata: Metadata = {
