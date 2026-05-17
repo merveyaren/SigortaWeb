@@ -18,6 +18,7 @@ class InsurancePolicySerializer(serializers.ModelSerializer):
             "status",
             "created_at",
         )
+        read_only_fields = ("policy_number", "insurer_name", "start_date", "end_date")
 
 
 class InsuranceQuoteSerializer(serializers.ModelSerializer):
@@ -33,6 +34,7 @@ class InsuranceQuoteSerializer(serializers.ModelSerializer):
             "notes",
             "created_at",
         )
+        read_only_fields = ("reference_code", "valid_until")
 
 
 class ClaimTicketSerializer(serializers.ModelSerializer):
@@ -46,6 +48,7 @@ class ClaimTicketSerializer(serializers.ModelSerializer):
             "status",
             "created_at",
         )
+        read_only_fields = ("claim_number",)
 
 
 class PaymentNoticeSerializer(serializers.ModelSerializer):
@@ -59,6 +62,7 @@ class PaymentNoticeSerializer(serializers.ModelSerializer):
             "status",
             "created_at",
         )
+        read_only_fields = ("due_date",)
 
 
 class CustomerAlertSerializer(serializers.ModelSerializer):
