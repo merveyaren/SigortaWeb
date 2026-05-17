@@ -1,6 +1,7 @@
-from rest_framework.generics import ListAPIView
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from datetime import date, timedelta
+import random
 
 from .models import ClaimTicket, CustomerAlert, InsurancePolicy, InsuranceQuote, PaymentNotice
 from .serializers import (
@@ -101,7 +102,7 @@ def auto_seed_user_data(user):
         )
 
 
-class PolicyListView(ListAPIView):
+class PolicyViewSet(viewsets.ModelViewSet):
     serializer_class = InsurancePolicySerializer
     permission_classes = [IsAuthenticated]
 
@@ -109,8 +110,19 @@ class PolicyListView(ListAPIView):
         auto_seed_user_data(self.request.user)
         return InsurancePolicy.objects.filter(user=self.request.user)
 
+    def perform_create(self, serializer):
+        # Generate random unique policy number if not provided
+        policy_num = f"POL-{date.today().year}-{random.randint(10000, 99999)}"
+        serializer.save(
+            user=self.request.user,
+            policy_number=policy_num,
+            insurer_name="Insucom Sigorta A.Ş.",
+            start_date=date.today(),
+            end_date=date.today() + timedelta(days=365)
+        )
 
-class QuoteListView(ListAPIView):
+
+class QuoteViewSet(viewsets.ModelViewSet):
     serializer_class = InsuranceQuoteSerializer
     permission_classes = [IsAuthenticated]
 
@@ -118,8 +130,17 @@ class QuoteListView(ListAPIView):
         auto_seed_user_data(self.request.user)
         return InsuranceQuote.objects.filter(user=self.request.user)
 
+    def perform_create(self, serializer):
+        ref_code = f"QT-{random.randint(1000, 9999)}-{random.choice(['A', 'B', 'C'])}"
+        serializer.save(
+            user=self.request.user,
+            reference_code=ref_code,
+            status="sent",
+            valid_until=date.today() + timedelta(days=30)
+        )
 
-class ClaimListView(ListAPIView):
+
+class ClaimViewSet(viewsets.ModelViewSet):
     serializer_class = ClaimTicketSerializer
     permission_classes = [IsAuthenticated]
 
@@ -127,8 +148,16 @@ class ClaimListView(ListAPIView):
         auto_seed_user_data(self.request.user)
         return ClaimTicket.objects.filter(user=self.request.user)
 
+    def perform_create(self, serializer):
+        claim_num = f"CLM-{random.randint(10000, 99999)}"
+        serializer.save(
+            user=self.request.user,
+            claim_number=claim_num,
+            status="open"
+        )
 
-class PaymentListView(ListAPIView):
+
+class PaymentViewSet(viewsets.ModelViewSet):
     serializer_class = PaymentNoticeSerializer
     permission_classes = [IsAuthenticated]
 
@@ -136,11 +165,21 @@ class PaymentListView(ListAPIView):
         auto_seed_user_data(self.request.user)
         return PaymentNotice.objects.filter(user=self.request.user)
 
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user,
+            due_date=date.today() + timedelta(days=30),
+            status="pending"
+        )
 
-class AlertListView(ListAPIView):
+
+class AlertViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerAlertSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         auto_seed_user_data(self.request.user)
         return CustomerAlert.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

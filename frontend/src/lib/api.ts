@@ -68,10 +68,26 @@ export const apiService = {
 
   // Private Data (Login Required)
   getMyPolicies: () => api.get('/me/policies/'),
+  createPolicy: (data: object) => api.post('/me/policies/', data),
+  updatePolicy: (id: number, data: object) => api.patch(`/me/policies/${id}/`, data),
+  deletePolicy: (id: number) => api.delete(`/me/policies/${id}/`),
+
   getMyQuotes: () => api.get('/me/quotes/'),
+  createQuote: (data: object) => api.post('/me/quotes/', data),
+  deleteQuote: (id: number) => api.delete(`/me/quotes/${id}/`),
+
   getMyClaims: () => api.get('/me/claims/'),
+  createClaim: (data: object) => api.post('/me/claims/', data),
+  deleteClaim: (id: number) => api.delete(`/me/claims/${id}/`),
+
   getMyPayments: () => api.get('/me/payments/'),
+  createPayment: (data: object) => api.post('/me/payments/', data),
+  updatePayment: (id: number, data: object) => api.patch(`/me/payments/${id}/`, data),
+  deletePayment: (id: number) => api.delete(`/me/payments/${id}/`),
+
   getMyAlerts: () => api.get('/me/alerts/'),
+  updateAlert: (id: number, data: object) => api.patch(`/me/alerts/${id}/`, data),
+  deleteAlert: (id: number) => api.delete(`/me/alerts/${id}/`),
 };
 
 export default api;
