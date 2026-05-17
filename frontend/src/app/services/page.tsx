@@ -3,6 +3,7 @@ import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
 import { ServiceListItem } from '@/types';
+import { mediaUrl } from '@/lib/media';
 
 const CheckArrow = () => (
   <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +46,7 @@ export default async function ServicesPage() {
                   <div className="mb-8">
                     {s.icon_url
                       ? <img src={s.icon_url} alt={s.title} width="58" height="62" />
-                      : <img src={`/assets/img/service-${(i % 4) + 1}.svg`} alt={s.title} width="58" height="62" />}
+                      : <img src={mediaUrl(`service-${(i % 4) + 1}.svg`)} alt={s.title} width="58" height="62" />}
                   </div>
                   <p className="lg:text-lg text-sm font-bold spline-sans sm:leading-7 text-primary-900 mb-5">{s.title}</p>
                   <p className="text-sm text-primary-100 mb-5">{s.short_description}</p>
@@ -64,7 +65,7 @@ export default async function ServicesPage() {
                 <div className="service-item bg-white w-full lg:p-10 p-6 rounded border border-primaryBorder h-full">
                   <p className="text-lg font-semibold text-gray-700 mb-9">Service {s.num}</p>
                   <div className="mb-8">
-                    <img src={`/assets/img/${s.icon}`} alt={s.title} width="58" height="62" />
+                    <img src={mediaUrl(s.icon)} alt={s.title} width="58" height="62" />
                   </div>
                   <p className="lg:text-lg text-sm font-bold spline-sans sm:leading-7 text-primary-900 mb-5">{s.title}</p>
                   <ul className="flex flex-col space-y-2.5">

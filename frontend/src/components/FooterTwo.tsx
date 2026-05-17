@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { mediaUrl } from '@/lib/media';
 
 export default function FooterTwo() {
   return (
@@ -33,7 +34,7 @@ export default function FooterTwo() {
             <div className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-1 gap-[30px] items-center lg:justify-between pb-[60px] mb-10 border-b border-[#E3E3E3]">
               {/* Logo */}
               <Link href="/" className="block">
-                <img src="/assets/img/logo.svg" alt="Insucom" />
+                <img src={mediaUrl('logo.svg')} alt="Insucom" />
               </Link>
               
               {/* Address */}
@@ -214,7 +215,7 @@ export default function FooterTwo() {
         
         {/* Background Shape */}
         <div className="absolute top-[250px] right-0 pointer-events-none">
-          <img src="/assets/img/footer-two-shape.png" alt="" />
+          <img src={mediaUrl('footer-two-shape.png')} alt="" />
         </div>
       </section>
     </footer>

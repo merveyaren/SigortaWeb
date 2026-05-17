@@ -81,3 +81,13 @@ class SeededApiContractTests(TestCase):
         self.assertEqual(token_response.status_code, 200)
         self.assertIn("access", token_response.data)
         self.assertIn("refresh", token_response.data)
+
+    def test_auth_token_works_without_api_prefix(self):
+        """Nginx /api/ prefix strip sonrası /auth/token/ yolu çalışmalı."""
+        response = self.client.post(
+            "/auth/token/",
+            {"username": "demo", "password": "Demo12345!"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("access", response.data)

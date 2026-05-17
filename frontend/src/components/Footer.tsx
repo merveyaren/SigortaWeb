@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { mediaUrl } from '@/lib/media';
 
 export default function Footer() {
   return (
@@ -10,7 +11,7 @@ export default function Footer() {
               {/* Logo & Social */}
               <div className="sm:col-span-4 col-span-12">
                 <div className="footer-logo mb-[30px]">
-                  <img src="/assets/img/logo-white.svg" alt="Insucom" />
+                  <img src={mediaUrl('logo-white.svg')} alt="Insucom" />
                 </div>
                 <p className="text-base leading-7 text-white mb-10">
                   Lorem ipsum dolor sit amet consectetur. <br />Faucibus proin eu ullamcorper.
@@ -134,7 +135,7 @@ export default function Footer() {
 
         {/* Footer Shape */}
         <div className="footer-shape absolute">
-          <img src="/assets/img/footer-shape.svg" alt="" className="gear" />
+          <img src={mediaUrl('footer-shape.svg')} alt="" className="gear" />
         </div>
       </div>
     </footer>

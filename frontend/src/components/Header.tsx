@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { mediaUrl } from '@/lib/media';
 
 interface HeaderProps {
   variant?: 'light' | 'dark';
@@ -8,14 +9,26 @@ interface HeaderProps {
 
 export default function Header({ variant = 'dark' }: HeaderProps) {
   const [isSticky, setIsSticky] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
+
+    const token = localStorage.getItem('access_token');
+    setIsLoggedIn(!!token);
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    setIsLoggedIn(false);
+    window.location.href = '/';
+  };
 
   const isLight = variant === 'light';
   const topBarBg = isLight ? 'bg-white border-b border-primaryBorder' : 'bg-[#028835]';
@@ -87,13 +100,13 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
       </div>
 
       {/* Navigation */}
-      <div className={`navigation-wrapper w-full h-[90px] ${navBg} ${isSticky ? 'fixed top-0 left-0 shadow-lg animate-[slideDown_0.3s_ease-in-out]' : ''}`}>
+      <div className={`navigation-wrapper w-full h-[90px] ${navBg} ${isSticky ? 'sticky fixed top-0 left-0 z-[9999] shadow-lg animate-[slideDown_0.3s_ease-in-out]' : ''}`}>
         <div className="theme-container h-full mx-auto">
           <div className="w-full h-full flex justify-between items-center">
             <div className="h-full flex items-center space-x-[72px]">
               <Link href="/">
                 <div className="logo-area w-[180px] h-[55px]">
-                  <img src="/assets/img/logo.svg" alt="insucom" className="w-full h-full object-contain" style={logoStyle} />
+                  <img src={mediaUrl('logo.svg')} alt="insucom" className="w-full h-full object-contain" style={logoStyle} />
                 </div>
               </Link>
               {/* Desktop Nav */}
@@ -137,11 +150,29 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
                     </ul>
                   </li>
                   <li className="h-full flex items-center"><Link href="/contact" className={`${navText} h-full flex items-center`}><span>Contact</span></Link></li>
-                  <li className="h-full flex items-center ml-4">
-                    <Link href="/login" className="px-5 py-2 bg-[#028835] hover:bg-[#004C3F] text-white rounded-lg text-sm font-bold common-trans flex items-center shadow-sm shadow-black/10">
-                      Login
-                    </Link>
-                  </li>
+                  {isLoggedIn ? (
+                    <>
+                      <li className="h-full flex items-center ml-4">
+                        <Link href="/account/policies" className="px-5 py-2 bg-[#004C3F] hover:bg-[#028835] text-white rounded-lg text-sm font-bold common-trans flex items-center shadow-sm shadow-black/10">
+                          Hesabım
+                        </Link>
+                      </li>
+                      <li className="h-full flex items-center ml-2">
+                        <button
+                          onClick={handleLogout}
+                          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-bold common-trans flex items-center shadow-sm shadow-black/10"
+                        >
+                          Log out
+                        </button>
+                      </li>
+                    </>
+                  ) : (
+                    <li className="h-full flex items-center ml-4">
+                      <Link href="/login" className="px-5 py-2 bg-[#028835] hover:bg-[#004C3F] text-white rounded-lg text-sm font-bold common-trans flex items-center shadow-sm shadow-black/10">
+                        Login
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </nav>
 
@@ -149,10 +180,21 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
               <nav className="nav-wrapper mobile-nav-wrapper block lg:hidden">
                 <div className="mobile-drawer">
                   <div className="mobile-wid w-[310px] bg-white fixed top-0 h-full px-8 pt-10" style={{ zIndex: 99999 }}>
-                    <div className="flex justify-center mb-10"><div className="logo-area w-[180px] h-[55px]"><img src="/assets/img/logo.svg" alt="insucom" className="w-full h-full object-contain" /></div></div>
+                    <div className="flex justify-center mb-10"><div className="logo-area w-[180px] h-[55px]"><img src={mediaUrl('logo.svg')} alt="insucom" className="w-full h-full object-contain" /></div></div>
                     <ul className="flex flex-col mb-10">
                       <li><Link href="/"><span>Home</span></Link></li>
-                      <li><Link href="/login"><span className="font-bold text-[#028835]">Login / Portal</span></Link></li>
+                      {isLoggedIn ? (
+                        <>
+                          <li><Link href="/account/policies"><span className="font-bold text-[#028835]">Hesabım</span></Link></li>
+                          <li>
+                            <button onClick={handleLogout} className="text-left w-full py-1">
+                              <span className="font-bold text-red-600">Log out</span>
+                            </button>
+                          </li>
+                        </>
+                      ) : (
+                        <li><Link href="/login"><span className="font-bold text-[#028835]">Login / Portal</span></Link></li>
+                      )}
                       <li><Link href="/about"><span>About Us</span></Link></li>
                       <li><Link href="/services"><span>Services</span></Link></li>
                       <li><Link href="/projects"><span>Projects</span></Link></li>

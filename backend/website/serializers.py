@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from config.media import resolve_media_url
+
 from .models import PageSection, PageStatistic, SiteSetting, SocialLink, StaticPage
 
 
@@ -11,13 +13,7 @@ class PageSectionSerializer(serializers.ModelSerializer):
         fields = ("key", "title", "body", "image_path", "image_url", "sort_order")
 
     def get_image_url(self, obj):
-        if not obj.image_path:
-            return ""
-        normalized_path = obj.image_path[1:] if obj.image_path.startswith("./") else obj.image_path
-        request = self.context.get("request")
-        if request is None:
-            return normalized_path
-        return request.build_absolute_uri(normalized_path)
+        return resolve_media_url(obj.image_path)
 
 
 class PageStatisticSerializer(serializers.ModelSerializer):

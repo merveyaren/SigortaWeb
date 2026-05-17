@@ -26,9 +26,16 @@ export default function LoginPage() {
       localStorage.setItem('access_token', tokens.access);
       localStorage.setItem('refresh_token', tokens.refresh);
       router.push('/account/policies');
-    } catch {
+    } catch (err: unknown) {
       setStatus('error');
-      setErrorMsg('Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyin.');
+      const axiosErr = err as { response?: { status?: number }; message?: string };
+      if (!axiosErr.response) {
+        setErrorMsg('Sunucuya bağlanılamadı. Lütfen daha sonra tekrar deneyin.');
+      } else if (axiosErr.response.status === 401) {
+        setErrorMsg('Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyin.');
+      } else {
+        setErrorMsg('Giriş yapılamadı. Lütfen tekrar deneyin.');
+      }
     }
   };
 

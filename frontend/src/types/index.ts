@@ -27,6 +27,7 @@ export interface PageSection {
   title: string;
   body: string;
   image_path: string;
+  image_url: string;
   sort_order: number;
 }
 

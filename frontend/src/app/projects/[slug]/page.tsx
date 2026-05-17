@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
+import { mediaUrl } from '@/lib/media';
 
 const CircleCheck = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +31,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   const project = await getProject(slug);
   const title = project?.title || 'A Lifetime Insurance';
   const description = project?.description || 'Aliquam eros justo, posuere loborti viverra laoreet matti ullamcorper posuere viverra.';
-  const img = project?.cover_image_url || '/assets/img/project-details-thumb-1.png';
+  const img = project?.cover_image_url || mediaUrl('project-details-thumb-1.png');
   const category = project?.category ? (typeof project.category === 'object' ? project.category.name : project.category) : 'Insurance';
   const date = project?.created_at ? new Date(project.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'November 19, 2022';
 
@@ -49,7 +50,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               <h2 className="headline-default text-primary-900 mb-2.5">{title}</h2>
               <p className="text-base leading-[27px] text-primary-100 mb-2.5">{description}</p>
               <p className="text-base leading-[27px] text-primary-100 xl:mb-[60px] mb-10">Aliquam eros justo, posuere loborti viverra .Aliquam eros justo, posuere lobortis non.</p>
-              <div style={{ backgroundImage: "url('/assets/img/Info-project-details.png')" }} className="lg:w-[583px] w-full xl:h-[218px] h-[200px] bg-no-repeat lg:bg-contain bg-cover lg:absolute -left-20 flex justify-center items-center px-5 sm:px-[60px]">
+              <div style={{ backgroundImage: `url(${mediaUrl('Info-project-details.png')})` }} className="lg:w-[583px] w-full xl:h-[218px] h-[200px] bg-no-repeat lg:bg-contain bg-cover lg:absolute -left-20 flex justify-center items-center px-5 sm:px-[60px]">
                 <div className="grid grid-cols-2 justify-between gap-y-[30px] w-full">
                   {[{ label: 'Client', val: 'Sandi leo rakiul' }, { label: 'Category', val: category }, { label: 'Amount', val: '45,000$' }, { label: 'Date', val: date }].map((item) => (
                     <div key={item.label} className="flex sm:space-x-[30px] space-x-5 items-center">

@@ -80,12 +80,12 @@ position: absolute;
     background-position: 100% center;
 }
 .hero-area-2{
-    background-image: url(/assets/img/hero-img-thumb.png);
+    background-image: url(https://insucomstorage.blob.core.windows.net/medya/hero-img-thumb.png);
     background-repeat: no-repeat;
     background-size: cover;
 }
 .service-area{
-    background-image: url(/assets/img/service-area.png);
+    background-image: url(https://insucomstorage.blob.core.windows.net/medya/service-area.png);
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 828px;
@@ -145,7 +145,7 @@ position: absolute;
     background: transparent !important;
 }
 .progress-step-wrapper{
-    background-image: url(/assets/img/progress-bg.svg);
+    background-image: url(https://insucomstorage.blob.core.windows.net/medya/progress-bg.svg);
     background-size: cover;
     background-repeat: no-repeat
 }
@@ -272,7 +272,7 @@ position: absolute;
     }
 }
 .fun-fact-area-two{
-    background-image: url(/assets/img/fun-fact-bg-2.png);
+    background-image: url(https://insucomstorage.blob.core.windows.net/medya/fun-fact-bg-2.png);
     background-size: cover;
     background-repeat: no-repeat
 }
@@ -285,17 +285,17 @@ position: absolute;
     transition: all 0.5s ease-in-out;
 }
 .footer-wrapper-two .discover-area{
-    background-image: url(/assets/img/discover-bg.png);
+    background-image: url(https://insucomstorage.blob.core.windows.net/medya/discover-bg.png);
     background-size: cover;
     background-repeat: no-repeat
 }
 .page-title-wrapper {
-    background-image: url(/assets/img/inner-page-banner.png);
+    background-image: url(https://insucomstorage.blob.core.windows.net/medya/inner-page-banner.png);
     background-size: cover;
     background-repeat: no-repeat
 }
 .mini-contact{
-    background-image: url(/assets/img/min-contact-bg.png);
+    background-image: url(https://insucomstorage.blob.core.windows.net/medya/min-contact-bg.png);
     background-size: cover;
     background-repeat: no-repeat
 }

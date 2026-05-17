@@ -8,8 +8,19 @@ from contact.models import ContactCard, ContactSiteProfile
 from faq.models import FAQEntry
 from projects.models import Project
 from services.models import Service
+from config.media import get_media_base_url
+
 from .models import SiteSetting, StaticPage
 from .serializers import SiteSettingSerializer, StaticPageSerializer
+
+
+class MediaConfigView(APIView):
+    """Frontend'in Azure Blob taban URL'sini alması için."""
+
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        return Response({"base_url": get_media_base_url()})
 
 
 class StaticPageDetailView(RetrieveAPIView):

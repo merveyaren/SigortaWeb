@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import PageBanner from '@/components/PageBanner';
+import { apiService } from '@/lib/api';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -10,14 +11,16 @@ export default function ContactPage() {
     e.preventDefault();
     setStatus('sending');
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'}/website/contact/`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) { setStatus('sent'); setForm({ name: '', email: '', message: '' }); }
-      else setStatus('error');
-    } catch { setStatus('error'); }
+      const res = await apiService.sendContactMessage(form);
+      if (res.status === 200 || res.status === 201) {
+        setStatus('sent');
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (

@@ -2,10 +2,13 @@
 __pycache__/
 *.py[cod]
 db.sqlite3
-.env
 *.log
 .coverage
 .idea/
 .vscode/
+
+# Çevre ve Şifre Dosyaları (Güvenlik için engellenenler)
+.env
 .env.local
 .env.production
+.env.example

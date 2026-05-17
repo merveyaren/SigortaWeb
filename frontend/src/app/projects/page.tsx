@@ -3,6 +3,7 @@ import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
 import { ProjectListItem } from '@/types';
+import { mediaUrl } from '@/lib/media';
 
 async function getProjects() {
   try {
@@ -14,12 +15,12 @@ async function getProjects() {
 }
 
 const staticProjects = [
-  { title: 'Coverage Pro', category: 'Insurance', img: '/assets/img/blog-4.png', slug: 'coverage-pro' },
-  { title: 'Securely', category: 'Health', img: '/assets/img/blog-5.png', slug: 'securely' },
-  { title: 'Risk Proof', category: 'Life', img: '/assets/img/blog-1.png', slug: 'risk-proof' },
-  { title: 'Life Guard', category: 'Property', img: '/assets/img/blog-1.png', slug: 'life-guard' },
-  { title: 'Auto Safe', category: 'Auto', img: '/assets/img/blog-4.png', slug: 'auto-safe' },
-  { title: 'Business Pro', category: 'Business', img: '/assets/img/blog-5.png', slug: 'business-pro' },
+  { title: 'Coverage Pro', category: 'Insurance', img: mediaUrl('blog-4.png'), slug: 'coverage-pro' },
+  { title: 'Securely', category: 'Health', img: mediaUrl('blog-5.png'), slug: 'securely' },
+  { title: 'Risk Proof', category: 'Life', img: mediaUrl('blog-1.png'), slug: 'risk-proof' },
+  { title: 'Life Guard', category: 'Property', img: mediaUrl('blog-1.png'), slug: 'life-guard' },
+  { title: 'Auto Safe', category: 'Auto', img: mediaUrl('blog-4.png'), slug: 'auto-safe' },
+  { title: 'Business Pro', category: 'Business', img: mediaUrl('blog-5.png'), slug: 'business-pro' },
 ];
 
 export default async function ProjectsPage() {
@@ -38,7 +39,7 @@ export default async function ProjectsPage() {
                   <div className="w-full relative group">
                     <div className="w-full h-[440px] rounded overflow-hidden">
                       <img
-                        src={p.cover_image_url || '/assets/img/blog-4.png'}
+                        src={p.cover_image_url || mediaUrl('blog-4.png')}
                         alt={p.title}
                         className="w-full h-full object-cover"
                       />

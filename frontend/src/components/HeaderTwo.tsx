@@ -1,17 +1,30 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { mediaUrl } from '@/lib/media';
 
 export default function HeaderTwo() {
   const [isSticky, setIsSticky] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
+
+    const token = localStorage.getItem('access_token');
+    setIsLoggedIn(!!token);
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    setIsLoggedIn(false);
+    window.location.href = '/';
+  };
   return (
     <header className="absolute top-0 left-0 z-[9999] w-full">
       {/* Top Bar */}
@@ -55,11 +68,11 @@ export default function HeaderTwo() {
       </div>
 
       {/* Navigation */}
-      <div className={`navigation-wrapper navigation-wrapper-two-two w-full !bg-[#004C3F] h-[90px] ${isSticky ? 'fixed top-0 left-0 shadow-lg animate-[slideDown_0.3s_ease-in-out]' : ''}`}>
+      <div className={`navigation-wrapper navigation-wrapper-two-two w-full !bg-[#004C3F] h-[90px] ${isSticky ? 'sticky fixed top-0 left-0 z-[9999] shadow-lg animate-[slideDown_0.3s_ease-in-out]' : ''}`}>
         <div className="theme-container h-full mx-auto px-5">
           <div className="w-full h-full flex justify-between items-center">
             <Link href="/">
-              <img src="/assets/img/logo-2.svg" alt="logo" />
+              <img src={mediaUrl('logo-2.svg')} alt="logo" />
             </Link>
             
             <nav className="nav-wrapper nav-wrapper-2 lg:block hidden">
@@ -93,11 +106,29 @@ export default function HeaderTwo() {
                 <li><Link href="/blog" className="hover:text-green-400 transition-colors">Blogs</Link></li>
                 <li><Link href="/faq" className="hover:text-green-400 transition-colors">Pages</Link></li>
                 <li><Link href="/contact" className="hover:text-green-400 transition-colors">Contact</Link></li>
-                <li>
-                  <Link href="/login" className="ml-4 px-5 py-2 bg-[#028835] hover:bg-white hover:text-primary-900 text-white font-bold rounded-lg text-sm common-trans shadow-sm">
-                    Login
-                  </Link>
-                </li>
+                {isLoggedIn ? (
+                  <>
+                    <li>
+                      <Link href="/account/policies" className="ml-4 px-4 py-2 bg-[#028835] hover:bg-white hover:text-primary-900 text-white font-bold rounded-lg text-sm common-trans shadow-sm">
+                        Hesabım
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="ml-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-sm common-trans shadow-sm"
+                      >
+                        Log out
+                      </button>
+                    </li>
+                  </>
+                ) : (
+                  <li>
+                    <Link href="/login" className="ml-4 px-5 py-2 bg-[#028835] hover:bg-white hover:text-primary-900 text-white font-bold rounded-lg text-sm common-trans shadow-sm">
+                      Login
+                    </Link>
+                  </li>
+                )}
               </ul>
             </nav>
 

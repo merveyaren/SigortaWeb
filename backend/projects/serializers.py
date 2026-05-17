@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from config.media import resolve_media_url
+
 from .models import Project, ProjectCategory, ProjectMeta
 
 
@@ -30,13 +32,7 @@ class ProjectListSerializer(serializers.ModelSerializer):
         )
 
     def get_cover_image_url(self, obj):
-        if not obj.cover_image_path:
-            return ""
-        normalized_path = obj.cover_image_path[1:] if obj.cover_image_path.startswith("./") else obj.cover_image_path
-        request = self.context.get("request")
-        if request is None:
-            return normalized_path
-        return request.build_absolute_uri(normalized_path)
+        return resolve_media_url(obj.cover_image_path)
 
 
 class ProjectDetailSerializer(serializers.ModelSerializer):
@@ -74,13 +70,7 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
         }
 
     def get_cover_image_url(self, obj):
-        if not obj.cover_image_path:
-            return ""
-        normalized_path = obj.cover_image_path[1:] if obj.cover_image_path.startswith("./") else obj.cover_image_path
-        request = self.context.get("request")
-        if request is None:
-            return normalized_path
-        return request.build_absolute_uri(normalized_path)
+        return resolve_media_url(obj.cover_image_path)
 
 
 class ProjectMetaSerializer(serializers.ModelSerializer):

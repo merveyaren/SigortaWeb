@@ -3,6 +3,7 @@ import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
 import ClientSlider from '@/components/ClientSlider';
+import { mediaUrl } from '@/lib/media';
 
 async function getBlog(slug: string) {
   try {
@@ -12,9 +13,9 @@ async function getBlog(slug: string) {
 }
 
 const recentPosts = [
-  { img: '/assets/img/blog-sidebar-thumb-1.png', title: 'Aliquam eros justo, posuere loborti viverra', date: 'Oct 19, 2022' },
-  { img: '/assets/img/blog-sidebar-thumb-2.png', title: 'Aliquam eros justo, posuere loborti viverra', date: 'Oct 20, 2022' },
-  { img: '/assets/img/blog-sidebar-thumb-1.png', title: 'Aliquam eros justo, posuere loborti viverra', date: 'Oct 21, 2022' },
+  { img: mediaUrl('blog-sidebar-thumb-1.png'), title: 'Aliquam eros justo, posuere loborti viverra', date: 'Oct 19, 2022' },
+  { img: mediaUrl('blog-sidebar-thumb-2.png'), title: 'Aliquam eros justo, posuere loborti viverra', date: 'Oct 20, 2022' },
+  { img: mediaUrl('blog-sidebar-thumb-1.png'), title: 'Aliquam eros justo, posuere loborti viverra', date: 'Oct 21, 2022' },
 ];
 const tags = ['Insurance', 'Life Insurance', 'Health', 'Property', 'Auto', 'Business', 'Cyber', 'Claims'];
 
@@ -23,7 +24,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   const blog = await getBlog(slug);
   const title = blog?.title || 'Giving You the Power to Protect Your Loved Ones and Secure Your Financial Future';
   const content = blog?.content || 'Aliquam eros posuere loborti viverra laoree ullamcorper posuere viverra eros justo, posuere lobo viverra laoreet augue mattis fermentum ullamcorper viverra. Aliquam eros justo, posuere loborti viverra laoreet matti ullamcorper posuere viverra. Aliquam eros justo, posuere lobortis non, viverra laoreet augue mattis fermentum ullamcorper viverra.';
-  const img = blog?.cover_image_url || '/assets/img/blog-details.png';
+  const img = blog?.cover_image_url || mediaUrl('blog-details-1.png');
   const author = blog?.author || 'Admin';
   const date = blog?.published_at ? new Date(blog.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'October 19, 2022';
   const category = blog?.category ? (typeof blog.category === 'object' ? blog.category.name : blog.category) : 'Insurance';
@@ -64,11 +65,11 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                 <p className="text-base leading-[27px] text-primary-100 mb-[60px]">Aliquam eros justo, posuere loborti viverra laoreet matti ullamcorper posuere viverra. Aliquam eros justo, posuere lobortis non, viverra laoreet augue mattis fermentum ullamcorper viverra laoreet.</p>
                 <div className="sm:flex sm:space-x-[30px] mb-5">
                   <div className="sm:w-2/3 mb-5 sm:mb-0">
-                    <img src="/assets/img/blog-details-2.png" alt="" className="w-full h-[380px] object-cover" />
+                    <img src={mediaUrl('blog-details-2.png')} alt="" className="w-full h-[380px] object-cover" />
                   </div>
                   <div className="sm:w-1/3 flex flex-col space-y-[30px]">
-                    <img src="/assets/img/blog-details-3.png" alt="" className="w-full h-[175px] object-cover" />
-                    <img src="/assets/img/blog-details-4.png" alt="" className="w-full h-[175px] object-cover" />
+                    <img src={mediaUrl('blog-details-3.png')} alt="" className="w-full h-[175px] object-cover" />
+                    <img src={mediaUrl('blog-details-4.png')} alt="" className="w-full h-[175px] object-cover" />
                   </div>
                 </div>
                 <p className="text-base leading-[27px] text-primary-100 mb-10">Aliquam eros posuere loborti viverra laoree ullamcorper posuere viverra eros justo, posuere lobo viverra laoreet augue mattis fermentum ullamcorper viverra.</p>
@@ -84,7 +85,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                 {/* Author card */}
                 <div className="w-full sm:h-[180px] p-5 sm:p-0 border border-primaryBorder rounded sm:flex items-center sm:space-x-[30px] mb-[30px]">
                   <div className="w-[180px] h-full mb-5 sm:mb-0 overflow-hidden">
-                    <img src="/assets/img/blog-details-person.png" alt="Author" className="w-full h-full object-cover" />
+                    <img src={mediaUrl('blog-details-person.png')} alt="Author" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 pr-5">
                     <p className="text-lg text-gray-700 spline-sans font-semibold leading-[27px] mb-2.5">Stanio lainto</p>
@@ -159,7 +160,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                   <div key={num} className="item group">
                     <div className="w-full">
                       <div className="w-full h-[275px] rounded overflow-hidden relative mb-5">
-                        <img src={`/assets/img/blog-details-${num}.png`} alt="" className="w-full h-full object-cover" />
+                        <img src={mediaUrl(`blog-details-${num}.png`)} alt="" className="w-full h-full object-cover" />
                         <div className="w-full h-full flex justify-center bg-primary-500 bg-opacity-80 items-center absolute left-0 top-0 opacity-0 group-hover:opacity-100 common-trans">
                           <Link href="/blog">
                             <div className="w-[60px] h-[60px] rounded-full bg-white flex justify-center items-center">
@@ -210,7 +211,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                       {[1, 2].map((num) => (
                         <div key={num} className="swiper-slide">
                           <div 
-                            style={{ backgroundImage: `url('/assets/img/blog-sidebar-thumb-${num}.png')` }}
+                            style={{ backgroundImage: `url(${mediaUrl(`blog-sidebar-thumb-${num}.png`)})` }}
                             className="w-full h-[268px] rounded flex items-end bg-no-repeat bg-cover p-[30px] mt-5 relative"
                           >
                             <div className="absolute inset-0 bg-black/20 rounded"></div>
@@ -260,7 +261,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                         <img src={p.img} alt={p.title} className="w-full h-full object-cover" />
                       </div>
                       <div>
-                        <Link href="/blog">
+                    <Link href={`/blog/${p.title.toLowerCase().replace(/ /g, '-')}`}>
                           <p className="text-sm font-semibold spline-sans text-primary-900 hover:text-primary-500 common-trans leading-5 mb-1">{p.title}</p>
                         </Link>
                         <p className="text-xs text-primary-100">{p.date}</p>

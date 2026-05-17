@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from config.media import resolve_media_url
+
 from .models import Service, ServiceCategory, ServiceFeature
 
 
@@ -28,13 +30,7 @@ class ServiceListSerializer(serializers.ModelSerializer):
         )
 
     def get_icon_url(self, obj):
-        if not obj.icon_path:
-            return ""
-        normalized_path = obj.icon_path[1:] if obj.icon_path.startswith("./") else obj.icon_path
-        request = self.context.get("request")
-        if request is None:
-            return normalized_path
-        return request.build_absolute_uri(normalized_path)
+        return resolve_media_url(obj.icon_path)
 
 
 class ServiceDetailSerializer(serializers.ModelSerializer):
@@ -62,13 +58,7 @@ class ServiceDetailSerializer(serializers.ModelSerializer):
         return [f.text for f in obj.features.all()]
 
     def get_icon_url(self, obj):
-        if not obj.icon_path:
-            return ""
-        normalized_path = obj.icon_path[1:] if obj.icon_path.startswith("./") else obj.icon_path
-        request = self.context.get("request")
-        if request is None:
-            return normalized_path
-        return request.build_absolute_uri(normalized_path)
+        return resolve_media_url(obj.icon_path)
 
 
 class ServiceFeatureSerializer(serializers.ModelSerializer):

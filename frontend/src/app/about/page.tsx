@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useEffect } from 'react';
 import PageBanner from '@/components/PageBanner';
+import { mediaUrl } from '@/lib/media';
 
 const StarIcon = () => (
   <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,9 +17,9 @@ const CheckIcon = () => (
 );
 
 const testimonials = [
-  { img: '/assets/img/testimonial-4.png', name: 'Jane Cooper', role: 'Human Resource' },
-  { img: '/assets/img/testimonial-5.png', name: 'Robert Fox', role: 'CEO, Tech Corp' },
-  { img: '/assets/img/testimonial-6.png', name: 'Eleanor Pena', role: 'Marketing Head' },
+  { img: mediaUrl('testimonial-4.png'), name: 'Jane Cooper', role: 'Human Resource' },
+  { img: mediaUrl('testimonial-5.png'), name: 'Robert Fox', role: 'CEO, Tech Corp' },
+  { img: mediaUrl('testimonial-6.png'), name: 'Eleanor Pena', role: 'Marketing Head' },
 ];
 
 const faqs = [
@@ -66,7 +67,7 @@ export default function AboutPage() {
             <div className="w-full grid xl:grid-cols-2 grid-cols-1 lg:gap-[66px] gap-[30px] items-center relative">
               <div>
                 <div className="thumbnail-area 2xl:w-[721px] w-full 2xl:absolute 2xl:-left-[150px] -top-8 relative">
-                  <img src="/assets/img/about-thumb.png" alt="about" className="relative z-10 w-full h-full" />
+                  <img src={mediaUrl('about-thumb.png')} alt="about" className="relative z-10 w-full h-full" />
                   <div className="about-shape gear-2 xl:w-[385px] xl:h-[385px] md:w-[500px] md:h-[500px] w-[250px] h-[250px]"></div>
                   <div className="w-[250px] h-[94px] rounded-[16px] bg-primary-500 flex justify-center items-center absolute sm:top-[432px] top-[200px] sm:right-[156px] right-5 z-10">
                     <div>
@@ -135,7 +136,7 @@ export default function AboutPage() {
                       <p className="text-base text-primary-100">{item.label}</p>
                     </div>
                     <div style={{ left: 'calc(50% - 32px)', bottom: 'calc(100% - 32px)' }} className="w-[64px] h-[64px] rounded-full bg-primary-500 flex justify-center items-center absolute">
-                      <img src={`/assets/img/${item.icon}`} alt="ico" />
+                      <img src={mediaUrl(item.icon)} alt="ico" />
                     </div>
                   </div>
                 ))}
@@ -149,7 +150,7 @@ export default function AboutPage() {
           <div className="theme-container mx-auto">
             <div data-aos="fade-up" data-aos-duration="1000" className="faq-two xl:w-full w-full bg-white sm:p-[60px] p-5 rounded-[10px] flex xl:flex-row flex-col xl:space-x-[75px] space-y-[75px] xl:space-y-0 xl:items-center">
               <div className="sm:w-[525px] w-full xl:h-[741px] h-[500px] relative rounded-[10px] overflow-hidden">
-                <img src="/assets/img/fun-fact-thum.png" alt="thumb" className="w-full h-full object-cover" />
+                <img src={mediaUrl('fun-fact-thum.png')} alt="thumb" className="w-full h-full object-cover" />
                 <div className="w-[268px] h-[87px] rounded-full p-3 bg-white absolute right-5 bottom-5" style={{ boxShadow: '0px 4.8px 24.4px -6px rgba(19,16,34,0.1), 0px 4px 13px -2px rgba(19,16,34,0.06)' }}>
                   <div className="flex space-x-[15px] items-center">
                     <div className="w-[63px] h-[63px] rounded-full bg-secondary flex justify-center items-center">

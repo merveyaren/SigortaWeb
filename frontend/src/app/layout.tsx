@@ -3,6 +3,9 @@ import "./globals.css";
 import HeaderWrapper from "@/components/HeaderWrapper";
 import FooterWrapper from "@/components/FooterWrapper";
 import Scripts from "@/components/Scripts";
+import { mediaUrl } from "@/lib/media";
+import '@/lib/monitoring';
+
 
 export const metadata: Metadata = {
   title: "Insucom - Insurance Agency",
@@ -17,7 +20,7 @@ export default function RootLayout({
       <head>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+        <link rel="icon" type="image/png" href={mediaUrl("favicon.png")} />
         <link rel="stylesheet" href="/css/swiper.min.css" />
         <link rel="stylesheet" href="/css/aos.css" />
         <link rel="stylesheet" href="/css/output.css" />

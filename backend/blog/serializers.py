@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from config.media import resolve_media_url
+
 from .models import BlogCategory, BlogComment, BlogPost
 
 
@@ -34,13 +36,7 @@ class BlogPostListSerializer(serializers.ModelSerializer):
         return obj.comments.filter(is_approved=True).count()
 
     def get_cover_image_url(self, obj):
-        if not obj.cover_image_path:
-            return ""
-        normalized_path = obj.cover_image_path[1:] if obj.cover_image_path.startswith("./") else obj.cover_image_path
-        request = self.context.get("request")
-        if request is None:
-            return normalized_path
-        return request.build_absolute_uri(normalized_path)
+        return resolve_media_url(obj.cover_image_path)
 
 
 class BlogPostDetailSerializer(serializers.ModelSerializer):
@@ -70,13 +66,7 @@ class BlogPostDetailSerializer(serializers.ModelSerializer):
         return BlogCommentSerializer(approved, many=True).data
 
     def get_cover_image_url(self, obj):
-        if not obj.cover_image_path:
-            return ""
-        normalized_path = obj.cover_image_path[1:] if obj.cover_image_path.startswith("./") else obj.cover_image_path
-        request = self.context.get("request")
-        if request is None:
-            return normalized_path
-        return request.build_absolute_uri(normalized_path)
+        return resolve_media_url(obj.cover_image_path)
 
 
 class BlogCommentSerializer(serializers.ModelSerializer):

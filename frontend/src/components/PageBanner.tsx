@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { mediaUrl } from '@/lib/media';
 
 interface PageBannerProps {
   title: string;
@@ -9,7 +10,7 @@ export default function PageBanner({ title, breadcrumb }: PageBannerProps) {
   return (
     <section 
       className="page-title-wrapper w-full h-[345px] bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/assets/img/inner-page-banner.png')" }}
+      style={{ backgroundImage: `url(${mediaUrl('inner-page-banner.png')})` }}
     >
       <div className="theme-container mx-auto h-full">
         <div

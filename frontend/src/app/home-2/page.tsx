@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import FooterTwo from '@/components/FooterTwo';
+import { mediaUrl } from '@/lib/media';
 
 export default function HomeTwo() {
   return (
@@ -36,16 +36,16 @@ export default function HomeTwo() {
                 </div>
               </div>
               <div className="thumb-area" data-aos="fade-left">
-                <img src="/assets/img/hero-img-2.png" alt="Hero" className="w-full h-full object-contain" />
+                <img src={mediaUrl('hero-img-2.png')} alt="Hero" className="w-full h-full object-contain" />
               </div>
             </div>
           </div>
           {/* Shapes */}
           <div className="absolute inset-0 pointer-events-none opacity-10">
-             <img src="/assets/img/hero-shape-1.png" className="absolute left-5 bottom-[314px]" alt="" />
-             <img src="/assets/img/hero-shape-2.png" className="absolute left-[80px] bottom-[160px] opacity-100" alt="" />
-             <img src="/assets/img/hero-shape-3.png" className="absolute left-5 bottom-5" alt="" />
-             <img src="/assets/img/hero-shape-4.png" className="absolute left-[218px] bottom-5" alt="" />
+             <img src={mediaUrl('hero-shape-1.png')} className="absolute left-5 bottom-[314px]" alt="" />
+             <img src={mediaUrl('hero-shape-2.png')} className="absolute left-[80px] bottom-[160px] opacity-100" alt="" />
+             <img src={mediaUrl('hero-shape-3.png')} className="absolute left-5 bottom-5" alt="" />
+             <img src={mediaUrl('hero-shape-4.png')} className="absolute left-[218px] bottom-5" alt="" />
           </div>
         </section>
 
@@ -54,7 +54,7 @@ export default function HomeTwo() {
           <div className="theme-container mx-auto px-5">
             <div className="w-full grid xl:grid-cols-2 grid-cols-1 gap-10 items-center">
               <div className="thumb-area relative" data-aos="fade-right">
-                <img src="/assets/img/about-thumb-2.png" alt="About" className="rounded-lg shadow-xl" />
+                <img src={mediaUrl('about-thumb-2.png')} alt="About" className="rounded-lg shadow-xl" />
                 <button type="button" className="w-[110px] h-[110px] rounded bg-primary-500 sm:flex hidden justify-center items-center absolute right-[80px] top-[315px] hover:bg-primary-900 transition-colors shadow-2xl">
                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
                 </button>
@@ -92,12 +92,12 @@ export default function HomeTwo() {
              </div>
              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px]">
                 {[
-                  { title: 'Family Insurance', icon: '/assets/img/service-1.svg' },
-                  { title: 'Health Insurance', icon: '/assets/img/service-2.svg' },
-                  { title: 'Home Insurance', icon: '/assets/img/service-3.svg' },
-                  { title: 'Life Insurance', icon: '/assets/img/service-4.svg' },
-                  { title: 'Car Insurance', icon: '/assets/img/service-5.svg' },
-                  { title: 'Business Insurance', icon: '/assets/img/service-6.svg' }
+                  { title: 'Family Insurance', icon: mediaUrl('service-1.svg') },
+                  { title: 'Health Insurance', icon: mediaUrl('service-2.svg') },
+                  { title: 'Home Insurance', icon: mediaUrl('service-3.svg') },
+                  { title: 'Life Insurance', icon: mediaUrl('service-4.svg') },
+                  { title: 'Car Insurance', icon: mediaUrl('service-5.svg') },
+                  { title: 'Business Insurance', icon: mediaUrl('service-6.svg') }
                 ].map((service, idx) => (
                   <div key={idx} className="bg-white p-10 rounded-lg shadow-sm hover:shadow-xl transition-all group" data-aos="fade-up" data-aos-delay={idx * 100}>
                     <div className="w-[70px] h-[70px] mb-8 bg-primary-50 rounded-lg flex justify-center items-center group-hover:bg-primary-500 transition-colors">
@@ -120,10 +120,10 @@ export default function HomeTwo() {
             <div className="theme-container mx-auto relative px-5">
               <div className="grid sm:grid-cols-4 grid-cols-1 sm:gap-[30px] gap-[60px]">
                 {[
-                  { count: '200', label: 'Team member', icon: '/assets/img/counter-2.png' },
-                  { count: '20', label: 'Team member', icon: '/assets/img/counter-3.png' },
-                  { count: '10k', label: 'Team member', icon: '/assets/img/counter-4.png' },
-                  { count: '900', label: 'Team member', icon: '/assets/img/counter-1.png' }
+                  { count: '200', label: 'Team member', icon: mediaUrl('counter-2.png') },
+                  { count: '20', label: 'Team member', icon: mediaUrl('counter-3.png') },
+                  { count: '10k', label: 'Team member', icon: mediaUrl('counter-4.png') },
+                  { count: '900', label: 'Team member', icon: mediaUrl('counter-1.png') }
                 ].map((item, idx) => (
                   <div key={idx} className="counter-item bg-white rounded flex justify-center items-center h-[150px] relative">
                     <div>
@@ -148,7 +148,7 @@ export default function HomeTwo() {
           <div className="theme-container mx-auto px-5">
             <div data-aos="fade-up" className="faq-two w-full bg-white sm:p-[60px] p-5 rounded-[10px] flex xl:flex-row flex-col xl:space-x-[75px] space-y-[75px] xl:space-y-0 items-center shadow-2xl">
               <div className="sm:w-[525px] w-full xl:h-[741px] h-[500px] relative rounded-[10px] overflow-hidden">
-                <img src="/assets/img/fun-fact-thum.png" alt="FAQ Thumb" className="w-full h-full object-cover" />
+                <img src={mediaUrl('fun-fact-thum.png')} alt="FAQ Thumb" className="w-full h-full object-cover" />
                 <div className="w-[268px] h-[87px] rounded-full p-3 bg-white absolute right-5 bottom-5 shadow-lg">
                   <div className="flex space-x-[15px] items-center">
                     <div className="w-[63px] h-[63px] rounded-full bg-secondary flex justify-center items-center">
@@ -203,7 +203,7 @@ export default function HomeTwo() {
                          </div>
                       </div>
                       <div className="flex flex-col items-center">
-                         <img src={`/assets/img/testimonial-${i + 3}.png`} className="mb-4" alt="" />
+                         <img src={mediaUrl(`testimonial-${i + 3}.png`)} className="mb-4" alt="" />
                          <h3 className="text-lg font-bold text-primary-900">Jane Cooper</h3>
                          <p className="text-primary-100 text-sm">Human Resource</p>
                       </div>
@@ -219,10 +219,10 @@ export default function HomeTwo() {
               <h2 className="text-primary-900 text-[40px] font-bold mb-[60px] text-center">Protection that's <br /> personalized for you</h2>
               <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[30px]">
                  {[
-                   { title: 'Sure Guard', step: '01', icon: '/assets/img/progress-1.svg' },
-                   { title: 'Safe Haven', step: '02', icon: '/assets/img/progress-2.svg' },
-                   { title: 'Secure Life', step: '03', icon: '/assets/img/progress-3.svg' },
-                   { title: 'Total Cover', step: '04', icon: '/assets/img/progress-4.svg' }
+                   { title: 'Sure Guard', step: '01', icon: mediaUrl('progress-1.svg') },
+                   { title: 'Safe Haven', step: '02', icon: mediaUrl('progress-2.svg') },
+                   { title: 'Secure Life', step: '03', icon: mediaUrl('progress-3.svg') },
+                   { title: 'Total Cover', step: '04', icon: mediaUrl('progress-4.svg') }
                  ].map((p, idx) => (
                    <div key={idx} className="bg-white p-10 rounded border border-primaryBorder relative overflow-hidden group hover:bg-primary-500 transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
                       <div className="relative z-10">
@@ -250,9 +250,9 @@ export default function HomeTwo() {
               </div>
               <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px]">
                  {[
-                   { title: 'A Lifetime Insurance for your future', date: 'October 19, 2022', img: '/assets/img/blog-1.png' },
-                   { title: 'Cyber Insurance Protection plan', date: 'October 20, 2022', img: '/assets/img/blog-2.png' },
-                   { title: 'Business Liability Insurance', date: 'October 21, 2022', img: '/assets/img/blog-3.png' }
+                   { title: 'A Lifetime Insurance for your future', date: 'October 19, 2022', img: mediaUrl('blog-1.png') },
+                   { title: 'Cyber Insurance Protection plan', date: 'October 20, 2022', img: mediaUrl('blog-2.png') },
+                   { title: 'Business Liability Insurance', date: 'October 21, 2022', img: mediaUrl('blog-3.png') }
                  ].map((post, idx) => (
                    <div key={idx} className="blog-item group" data-aos="fade-up" data-aos-delay={idx * 100}>
                       <div className="w-full h-[250px] rounded-lg overflow-hidden mb-6 relative">
@@ -271,7 +271,6 @@ export default function HomeTwo() {
            </div>
         </section>
       </main>
-      <FooterTwo />
     </>
   );
 }

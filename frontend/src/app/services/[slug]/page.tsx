@@ -3,6 +3,7 @@ import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
 import { notFound } from 'next/navigation';
+import { mediaUrl } from '@/lib/media';
 
 const CircleCheck = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,10 +20,10 @@ const ArrowRight = () => (
 const categories = ['Cyber Insurance', 'Professional Liability', 'Employment Practices', 'Errors and Omissions (E&O)', 'Laboratory', 'Elder Services', 'Directors and Officers (D&O)', 'Earthquake Insurance', 'Compensation Insurance'];
 
 const subServices = [
-  { title: 'Cost Optimization', img: '/assets/img/blog-1.png', icon: '/assets/img/service-1.svg' },
-  { title: 'Strategic Protection', img: '/assets/img/blog-2.png', icon: '/assets/img/service-2.svg' },
-  { title: 'Standard Setup', img: '/assets/img/blog-3.png', icon: '/assets/img/service-3.svg' },
-  { title: 'Regular Update', img: '/assets/img/blog-6.png', icon: '/assets/img/service-4.svg' },
+  { title: 'Cost Optimization', img: mediaUrl('blog-1.png'), icon: mediaUrl('service-1.svg') },
+  { title: 'Strategic Protection', img: mediaUrl('blog-2.png'), icon: mediaUrl('service-2.svg') },
+  { title: 'Standard Setup', img: mediaUrl('blog-3.png'), icon: mediaUrl('service-3.svg') },
+  { title: 'Regular Update', img: mediaUrl('blog-6.png'), icon: mediaUrl('service-4.svg') },
 ];
 
 async function getService(slug: string) {
@@ -40,7 +41,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
   const title = service?.title || 'Risk Assessment';
   const description = service?.description || 'Aliquam eros justo, posuere loborti viverra laoreet ullamcorper posuere viverra .Aliquam eros justo, posuere lobortis non viverra laoreet augue mattis fermentum ullamcorper viverra laoreet.';
-  const img = service?.icon_url || '/assets/img/service-details-1.png';
+  const img = service?.icon_url || mediaUrl('service-details-1.png');
 
   return (
     <>
@@ -121,7 +122,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               {/* Mini CTA */}
               <div 
                 className="mini-contact w-full h-[304px] flex justify-center items-center mb-[60px] bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: "url('/assets/img/min-contact-bg.png')" }}
+                style={{ backgroundImage: `url(${mediaUrl('min-contact-bg.png')})` }}
               >
                 <div>
                   <h2 className="text-white text-lg spline-sans leading-7 font-bold text-center mb-2.5">Work with us</h2>
