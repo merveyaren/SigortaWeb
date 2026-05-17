@@ -9,14 +9,26 @@ interface HeaderProps {
 
 export default function Header({ variant = 'dark' }: HeaderProps) {
   const [isSticky, setIsSticky] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
+
+    const token = localStorage.getItem('access_token');
+    setIsLoggedIn(!!token);
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    setIsLoggedIn(false);
+    window.location.href = '/';
+  };
 
   const isLight = variant === 'light';
   const topBarBg = isLight ? 'bg-white border-b border-primaryBorder' : 'bg-[#028835]';
@@ -138,11 +150,29 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
                     </ul>
                   </li>
                   <li className="h-full flex items-center"><Link href="/contact" className={`${navText} h-full flex items-center`}><span>Contact</span></Link></li>
-                  <li className="h-full flex items-center ml-4">
-                    <Link href="/login" className="px-5 py-2 bg-[#028835] hover:bg-[#004C3F] text-white rounded-lg text-sm font-bold common-trans flex items-center shadow-sm shadow-black/10">
-                      Login
-                    </Link>
-                  </li>
+                  {isLoggedIn ? (
+                    <>
+                      <li className="h-full flex items-center ml-4">
+                        <Link href="/account/policies" className="px-5 py-2 bg-[#004C3F] hover:bg-[#028835] text-white rounded-lg text-sm font-bold common-trans flex items-center shadow-sm shadow-black/10">
+                          Portal
+                        </Link>
+                      </li>
+                      <li className="h-full flex items-center ml-2">
+                        <button
+                          onClick={handleLogout}
+                          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-bold common-trans flex items-center shadow-sm shadow-black/10"
+                        >
+                          Log out
+                        </button>
+                      </li>
+                    </>
+                  ) : (
+                    <li className="h-full flex items-center ml-4">
+                      <Link href="/login" className="px-5 py-2 bg-[#028835] hover:bg-[#004C3F] text-white rounded-lg text-sm font-bold common-trans flex items-center shadow-sm shadow-black/10">
+                        Login
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </nav>
 
@@ -153,7 +183,18 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
                     <div className="flex justify-center mb-10"><div className="logo-area w-[180px] h-[55px]"><img src={mediaUrl('logo.svg')} alt="insucom" className="w-full h-full object-contain" /></div></div>
                     <ul className="flex flex-col mb-10">
                       <li><Link href="/"><span>Home</span></Link></li>
-                      <li><Link href="/login"><span className="font-bold text-[#028835]">Login / Portal</span></Link></li>
+                      {isLoggedIn ? (
+                        <>
+                          <li><Link href="/account/policies"><span className="font-bold text-[#028835]">Portal</span></Link></li>
+                          <li>
+                            <button onClick={handleLogout} className="text-left w-full py-1">
+                              <span className="font-bold text-red-600">Log out</span>
+                            </button>
+                          </li>
+                        </>
+                      ) : (
+                        <li><Link href="/login"><span className="font-bold text-[#028835]">Login / Portal</span></Link></li>
+                      )}
                       <li><Link href="/about"><span>About Us</span></Link></li>
                       <li><Link href="/services"><span>Services</span></Link></li>
                       <li><Link href="/projects"><span>Projects</span></Link></li>

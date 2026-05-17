@@ -5,14 +5,26 @@ import { mediaUrl } from '@/lib/media';
 
 export default function HeaderTwo() {
   const [isSticky, setIsSticky] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
+
+    const token = localStorage.getItem('access_token');
+    setIsLoggedIn(!!token);
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    setIsLoggedIn(false);
+    window.location.href = '/';
+  };
   return (
     <header className="absolute top-0 left-0 z-[9999] w-full">
       {/* Top Bar */}
@@ -94,11 +106,29 @@ export default function HeaderTwo() {
                 <li><Link href="/blog" className="hover:text-green-400 transition-colors">Blogs</Link></li>
                 <li><Link href="/faq" className="hover:text-green-400 transition-colors">Pages</Link></li>
                 <li><Link href="/contact" className="hover:text-green-400 transition-colors">Contact</Link></li>
-                <li>
-                  <Link href="/login" className="ml-4 px-5 py-2 bg-[#028835] hover:bg-white hover:text-primary-900 text-white font-bold rounded-lg text-sm common-trans shadow-sm">
-                    Login
-                  </Link>
-                </li>
+                {isLoggedIn ? (
+                  <>
+                    <li>
+                      <Link href="/account/policies" className="ml-4 px-4 py-2 bg-[#028835] hover:bg-white hover:text-primary-900 text-white font-bold rounded-lg text-sm common-trans shadow-sm">
+                        Portal
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="ml-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-sm common-trans shadow-sm"
+                      >
+                        Log out
+                      </button>
+                    </li>
+                  </>
+                ) : (
+                  <li>
+                    <Link href="/login" className="ml-4 px-5 py-2 bg-[#028835] hover:bg-white hover:text-primary-900 text-white font-bold rounded-lg text-sm common-trans shadow-sm">
+                      Login
+                    </Link>
+                  </li>
+                )}
               </ul>
             </nav>
 

@@ -8,7 +8,5 @@ export default function FooterWrapper() {
   const isAuthPage = pathname === '/login' || pathname === '/register';
   if (isAuthPage) return null;
   const isHome = pathname === '/';
-  const isHomeTwo = pathname === '/home-2';
-  if (isHomeTwo) return null;
   return isHome ? <Footer /> : <FooterTwo />;
 }
