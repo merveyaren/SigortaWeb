@@ -5,8 +5,8 @@ import { Policy } from '@/types';
 
 const statusClass: Record<string, string> = {
   active: 'badge-green',
-  expired: 'badge-red',
-  pending: 'badge-yellow',
+  lapsed: 'badge-red',
+  cancelled: 'badge-gray',
 };
 
 export default function PoliciesPage() {
@@ -57,11 +57,11 @@ export default function PoliciesPage() {
               {policies.map((p) => (
                 <tr key={p.id}>
                   <td className="font-mono text-[#004C3F] font-semibold">{p.policy_number}</td>
-                  <td>{p.type}</td>
+                  <td>{p.product_name}</td>
                   <td>{new Date(p.start_date).toLocaleDateString('tr-TR')}</td>
                   <td>{new Date(p.end_date).toLocaleDateString('tr-TR')}</td>
-                  <td className="font-semibold">{p.premium} ₺</td>
-                  <td><span className={`badge ${statusClass[p.status] ?? 'badge-gray'}`}>{p.status}</span></td>
+                  <td className="font-semibold">{parseFloat(p.premium_amount.toString()).toLocaleString('tr-TR', { minimumFractionDigits: 2 })} {p.currency}</td>
+                  <td><span className={`badge ${statusClass[p.status] ?? 'badge-gray'}`}>{p.status === 'active' ? 'Aktif' : p.status === 'lapsed' ? 'Süresi Doldu' : 'İptal'}</span></td>
                 </tr>
               ))}
             </tbody>

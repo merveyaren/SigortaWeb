@@ -5,10 +5,8 @@ import { Claim } from '@/types';
 
 const statusClass: Record<string, string> = {
   open: 'badge-yellow',
-  in_review: 'badge-yellow',
-  approved: 'badge-green',
-  rejected: 'badge-red',
-  closed: 'badge-gray',
+  review: 'badge-yellow',
+  closed: 'badge-green',
 };
 
 export default function ClaimsPage() {
@@ -47,21 +45,25 @@ export default function ClaimsPage() {
           <table className="dash-table">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Poliçe No</th>
+                <th>Hasar Dosya No</th>
+                <th>Olay Tarihi</th>
                 <th>Açıklama</th>
-                <th>Tarih</th>
+                <th>Kayıt Tarihi</th>
                 <th>Durum</th>
               </tr>
             </thead>
             <tbody>
               {claims.map((c) => (
                 <tr key={c.id}>
-                  <td className="text-[#004C3F] font-semibold">#{c.id}</td>
-                  <td className="font-mono">{c.policy_number}</td>
+                  <td className="text-[#004C3F] font-semibold">{c.claim_number}</td>
+                  <td>{new Date(c.incident_date).toLocaleDateString('tr-TR')}</td>
                   <td className="max-w-xs truncate">{c.description}</td>
-                  <td>{new Date(c.submitted_at).toLocaleDateString('tr-TR')}</td>
-                  <td><span className={`badge ${statusClass[c.status] ?? 'badge-gray'}`}>{c.status}</span></td>
+                  <td>{new Date(c.created_at).toLocaleDateString('tr-TR')}</td>
+                  <td>
+                    <span className={`badge ${statusClass[c.status] ?? 'badge-gray'}`}>
+                      {c.status === 'open' ? 'Açık' : c.status === 'review' ? 'İncelemede' : 'Kapandı'}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>

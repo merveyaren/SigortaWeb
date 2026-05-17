@@ -23,7 +23,7 @@ export default function PaymentsPage() {
 
   const total = payments
     .filter((p) => p.status === 'paid')
-    .reduce((sum, p) => sum + parseFloat(p.amount), 0);
+    .reduce((sum, p) => sum + parseFloat(p.amount.toString()), 0);
 
   return (
     <div className="space-y-6">
@@ -52,10 +52,10 @@ export default function PaymentsPage() {
           <table className="dash-table">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Poliçe No</th>
+                <th>İşlem ID</th>
+                <th>Açıklama / Taksit</th>
                 <th>Tutar</th>
-                <th>Ödeme Tarihi</th>
+                <th>Son Ödeme Tarihi</th>
                 <th>Durum</th>
               </tr>
             </thead>
@@ -63,10 +63,14 @@ export default function PaymentsPage() {
               {payments.map((p) => (
                 <tr key={p.id}>
                   <td className="text-[#004C3F] font-semibold">#{p.id}</td>
-                  <td className="font-mono">{p.policy_number}</td>
-                  <td className="font-semibold text-[#004C3F]">{parseFloat(p.amount).toFixed(2)} ₺</td>
-                  <td>{new Date(p.payment_date).toLocaleDateString('tr-TR')}</td>
-                  <td><span className={`badge ${statusClass[p.status] ?? 'badge-gray'}`}>{p.status}</span></td>
+                  <td>{p.description}</td>
+                  <td className="font-semibold text-[#004C3F]">{parseFloat(p.amount.toString()).toFixed(2)} ₺</td>
+                  <td>{new Date(p.due_date).toLocaleDateString('tr-TR')}</td>
+                  <td>
+                    <span className={`badge ${statusClass[p.status] ?? 'badge-gray'}`}>
+                      {p.status === 'paid' ? 'Ödendi' : p.status === 'pending' ? 'Bekliyor' : 'Gecikmiş'}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>
